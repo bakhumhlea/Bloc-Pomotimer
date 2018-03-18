@@ -1,0 +1,46 @@
+.time-session {
+  margin: 30px auto 10px auto;
+  font-size: 1.8rem;
+}
+.time-count {
+  width: 340px;
+  color: white;
+  font-family: 'Space Mono', sans-serif;
+  font-size: 4rem;
+  font-weight: bolder;
+  padding: 0 4px 0 4px;
+  border-radius: 12px;
+  margin: 10px auto auto auto;
+  background-color: #222222;
+  box-shadow: 0px 0px 8px 4px #b7b7b7;
+}
+.time-digit {
+
+}
+.time-status {
+  width: 240px;
+  color: #888888;
+  font-family: 'Space Mono', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 200;
+  margin: 4px auto auto auto;
+}
+.time-start-btn {
+  height: 60px;
+  width: 150px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px;
+  border: none;
+  border-radius: 16px;
+  margin: 10px auto auto auto;
+  background-color: #498e3f;
+}
+.time-start-btn:hover {
+  transition: 0.1s 0s all ease-out;
+  transform: scale(1.04,1.05);
+  background-color: #5db352;
+}

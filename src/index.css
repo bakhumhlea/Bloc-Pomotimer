@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family:  'Quicksand',
+                'Josefin Sans',
+                'Space Mono',
+                'Montserrat',
+                sans-serif;
+  font-size: 16px;
+}
