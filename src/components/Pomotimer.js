@@ -9,21 +9,15 @@ class Pomotimer extends Component {
     super(props);
     this.state = {
       sessions: "New Session",
-      timeCount : 0,
-      timeStatus : 'Start'
+      currentSessionTime: 0,
     };
   }
 
-  setTime(e, name, h, m, s) {
-    console.log(h + m + s);
-    e.preventDefault();
-    let sessionName = name == "" ? "Unnamed Session" : name ;
-    let hourInMilSec = parseInt(h*60*60*1000,10);
-    let minInMilSec = parseInt(m*60*1000,10);
-    let milSec = parseInt(s*1000,10);
+  setTime(name, time) {
+    console.log(time);
     this.setState({
-      sessions: sessionName,
-      timeCount: (hourInMilSec+minInMilSec+milSec)
+      sessions: name,
+      currentSessionTime: time,
     });
   }
 
@@ -32,11 +26,10 @@ class Pomotimer extends Component {
       <div>
         <TimeCount
           sessions = {this.state.sessions}
-          timeCount = {this.state.timeCount}
-          timeStatus = {this.state.timeStatus}
+          currentSessionTime = {this.state.currentSessionTime}
         />
         <TimeForm
-          setTime={(e,name,h,m,s)=>this.setTime(e,name,h,m,s)}
+          setTime = {(name,time)=>this.setTime(name,time)}
           />
       </div>
     )

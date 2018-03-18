@@ -18,7 +18,7 @@
 
 }
 .time-status {
-  width: 240px;
+  width: 350px;
   color: #888888;
   font-family: 'Space Mono', sans-serif;
   font-size: 1.4rem;
@@ -26,8 +26,9 @@
   margin: 4px auto auto auto;
 }
 .time-start-btn {
+  cursor: pointer;
   height: 60px;
-  width: 150px;
+  width: 350px;
   color: white;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.8rem;
@@ -37,10 +38,60 @@
   border: none;
   border-radius: 16px;
   margin: 10px auto auto auto;
-  background-color: #498e3f;
+  background-color: #e21e1e;
+  outline: none;
 }
 .time-start-btn:hover {
   transition: 0.1s 0s all ease-out;
-  transform: scale(1.04,1.05);
-  background-color: #5db352;
+  background-color: #ff3838;
+}
+.time-done-btn {
+  cursor: pointer;
+  height: 60px;
+  width: 350px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px;
+  border: none;
+  border-radius: 16px;
+  margin: 10px auto auto auto;
+  background-color: #02885b;
+  outline: none;
+}
+.time-reset-btn {
+  cursor: pointer;
+  display: inline-block;
+  height: 60px;
+  width: 170px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px;
+  border: none;
+  border-radius: 16px;
+  margin: 10px 5px auto auto;
+  background-color: #80ea2b;
+  outline: none;
+}
+.time-pause-btn {
+  cursor: pointer;
+  display: inline-block;
+  height: 60px;
+  width: 170px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px;
+  border: none;
+  border-radius: 16px;
+  margin: 10px auto auto 5px;
+  background-color: #f51f1f;
+  outline: none;
 }

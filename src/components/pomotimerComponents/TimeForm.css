@@ -13,6 +13,11 @@
   border: 2px solid #222222;
   border-radius: 8px;
   margin: 4px auto 4px auto;
+  outline: none;
+}
+.form-input-text:focus {
+  border: 2px solid #68a1da;
+  box-shadow: 0px 0px 3px 1px #68a1da;
 }
 .form-input-num {
   display: inline-block;
@@ -26,9 +31,15 @@
   border: 2px solid #222222;
   border-radius: 8px;
   margin: 4px;
+  outline: none;
+}
+.form-input-num:focus {
+  border: 2px solid #68a1da;
+  box-shadow: 0px 0px 3px 1px #68a1da;
 }
 .form-btn {
   display: block;
+  cursor: pointer;
   height: 40px;
   width: 200px;
   color: white;
@@ -44,10 +55,17 @@
 }
 .form-btn:hover {
   transition: 0.1s 0s all ease-in;
-  transform: scale(1.04,1.04);
   background-color: #08a6d2;
+}
+.form-error {
+  width: 300px;
+  height: 20px;
+  color: red;
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0 auto 0 auto;
 }
 .up-arrow {
   font-size: 2rem;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
