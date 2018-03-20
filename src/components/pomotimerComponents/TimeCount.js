@@ -5,25 +5,35 @@ class TimeCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentSession: "New Session",
       countTime: 0,
       hours: 0,
       minutes: 0,
       seconds: 0,
-      timerStatus: "standBy"
+      timerStatus: "standBy",
+      onBreak: false
     };
   }
 
   componentDidMount() {
-    //console.log(this.props.currentSessionTime);
-    this.handleTimeDisplay(this.props.currentSessionTime);
+    if(this.props.currentSession===null) {
+      this.handleTimeDisplay(this.state.countTime);
+    } else {
+      this.handleTimeDisplay(this.props.currentSession.sessionTime);
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     //console.log(prevState.timerStatus);
     //console.log(this.state.timerStatus);
-    //console.log(this.props.currentSessionTime);
-    if(this.props.currentSessionTime !== prevProps.currentSessionTime) {
-      this.setState({countTime:this.props.currentSessionTime});
-      this.handleTimeDisplay(this.props.currentSessionTime);
+    //console.log(this.props.currentSession);
+    //console.log(prevProps.currentSession);
+    if(this.props.currentSession !== prevProps.currentSession) {
+      console.log("Update State");
+      this.setState({
+        currentSession:this.props.currentSession.sessionName,
+        countTime:this.props.currentSession.sessionTime
+      });
+      //this.handleTimeDisplay(this.state.currentSession.sessionTime);
     }
     if((this.state.timerStatus!==prevState.timerStatus)&&(this.state.countTime > 0)) {
       switch (this.state.timerStatus) {
@@ -42,9 +52,17 @@ class TimeCount extends Component {
     if(this.state.countTime!==prevState.countTime) {
       this.handleTimeDisplay(this.state.countTime);
     }
+    if(this.state.timerStatus==="counting" && this.state.countTime===0) {
+      this.props.getBreakSession();
+      this.setState({
+        timerStatus:"standBy",
+        countTime: this.props.currentSession.sessionTime
+      });
+    }
   }
 
   handleTimeDisplay(timeInSec) {
+    console.log(timeInSec);
     let hours = Math.floor(timeInSec/3600);
     let minutes = Math.floor((timeInSec%3600)/60);
     let seconds = Math.floor(((timeInSec%3600)%60));
@@ -72,7 +90,7 @@ class TimeCount extends Component {
     e.preventDefault();
     this.setState({
       timerStatus:"standBy",
-      countTime: this.props.currentSessionTime
+      countTime: this.props.currentSession.sessionTime
     });
   }
 
@@ -87,10 +105,10 @@ class TimeCount extends Component {
   }
 
   render() {
-    if(this.state.timerStatus==="standBy"){
+    if (this.state.timerStatus==="standBy"){
       return (
         <div className="pomotimer-com">
-          <h3 className="time-session">{this.props.sessions}</h3>
+          <h3 className="time-session">{this.state.currentSession}</h3>
           <div className="time-count">
             <span className="time-digit">{this.state.hours}</span>
             <span className="time-digit">:</span>
@@ -108,7 +126,7 @@ class TimeCount extends Component {
     } else if (this.state.timerStatus==="counting" && this.state.countTime===0) {
       return (
         <div className="pomotimer-com">
-          <h3 className="time-session">{this.props.sessions}</h3>
+          <h3 className="time-session">{this.state.currentSession}</h3>
           <div className="time-count">
             <span className="time-digit">{this.state.hours}</span>
             <span className="time-digit">:</span>
@@ -124,10 +142,16 @@ class TimeCount extends Component {
         </div>
       )
     } else {
+      var styles = this.props.currentSession.sessionType!=="break"&&this.state.timerStatus==="counting"?
+        { color: "white",
+          textShadow: "0 0 10px #ff00de, 0 0 40px #ff00de"}:
+          { color: "white",
+            textShadow: "0 0 10px red, 0 0 40px red"};
+      var addStyles = this.state.timerStatus==="counting"? styles : {color: "white", textShadow: "0 0 20px #ff00de"};
       return (
         <div className="pomotimer-com">
-          <h3 className="time-session">{this.props.sessions}</h3>
-          <div className="time-count">
+          <h3 className="time-session">{this.state.currentSession}</h3>
+          <div className="time-count" style={ addStyles }>
             <span className="time-digit">{this.state.hours}</span>
             <span className="time-digit">:</span>
             <span className="time-digit">{this.state.minutes}</span>

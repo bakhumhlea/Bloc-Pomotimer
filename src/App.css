@@ -33,12 +33,13 @@
   font-size: large;
 }
 .App-version {
+  color: white;
   display: block;
   position: relative;
-  float: right;
+  /* float: initial; */
   font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
-  margin: 0 0 auto auto;
+  margin: 40px 0 auto auto;
 }
 
 @keyframes App-logo-spin {

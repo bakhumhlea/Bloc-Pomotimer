@@ -6,11 +6,19 @@ class TimeForm extends Component {
     super(props);
     this.state = {
       session: "",
+      hours: null,
+      minutes: null,
+      seconds: null,
+      error: ""
+    };
+  }
+  componentDidMount(){
+    this.setState({
       hours: 0,
       minutes: 0,
       seconds: 0,
       error: ""
-    };
+    });
   }
   handleInputSessionName(e) {
     e.preventDefault();
@@ -18,6 +26,7 @@ class TimeForm extends Component {
   }
   handleInputHr(e) {
     e.preventDefault();
+    console.log(e.target.value);
     this.setState({hours: e.target.value});
   }
   handleInputMin(e) {
@@ -28,26 +37,32 @@ class TimeForm extends Component {
     e.preventDefault();
     this.setState({seconds: e.target.value});
   }
-  handleSubmit(e,name,h,m,s) {
+  handleError() {
+    this.message = setInterval(()=> {
+      this.setState({error: ""});
+    }, 3000);
+  }
+  handleSubmit(e,name) {
     e.preventDefault();
-    let sessionName = name==="" ? "Unnamed Session" : name ;
-    let hourInSec = parseInt(h*60*60,10);
-    let minInSec = parseInt(m*60,10);
-    let sec = parseInt(s,10);
+    let sessionName = name==="" ? "Work Session" : name ;
+    let hourInSec = this.state.hours*60*60;
+    let minInSec = this.state.minutes*60;
+    let sec = this.state.seconds;
     let sessionTime = hourInSec+minInSec+sec;
-    if((sessionTime) > 0) {
+    console.log(this.state.hours);
+    console.log(sessionTime);
+    if(sessionTime === 0) {
+      this.props.setTime(sessionName,25*60);
+      this.setState({
+        error: "Set default session 25 minutes"
+      });
+      this.handleError();
+    } else {
       this.props.setTime(sessionName,sessionTime);
       this.setState({
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
         error: ""
       });
-      e.target.reset();
-    } else {
-      this.setState({error:"Please set the Timer!"})
     }
-
   }
 
   render() {
@@ -57,7 +72,7 @@ class TimeForm extends Component {
           <i className="up-arrow fas fa-chevron-up"></i>
         </div>
         <div className="form-error">{this.state.error}</div>
-        <form onSubmit={(e,name,h,m,s)=>this.handleSubmit(e,this.state.session,this.state.hours,this.state.minutes,this.state.seconds)}>
+        <form onSubmit={(e,name)=>this.handleSubmit(e,this.state.session)}>
           <input type="text" className="form-input-text" alt="session-name" placeholder="Session Name"
             onChange={(e)=>this.handleInputSessionName(e)} />
           <input type="number" className="form-input-num" alt="hours" placeholder="h"

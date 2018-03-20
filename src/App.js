@@ -6,7 +6,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.serState = {
+    this.setState = {
       username: 'Guest',
     };
   }
@@ -15,7 +15,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p className="App-version">v0.23</p>
           <div className="App-logo" alt="logo">
             <div className="App-logo-needle">|</div>
           </div>
