@@ -17,7 +17,7 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #0e1223;
   height: 120px;
   padding: 20px;
   color: white;
@@ -31,15 +31,6 @@
 
 .App-intro {
   font-size: large;
-}
-.App-version {
-  color: white;
-  display: block;
-  position: relative;
-  /* float: initial; */
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  margin: 40px 0 auto auto;
 }
 
 @keyframes App-logo-spin {

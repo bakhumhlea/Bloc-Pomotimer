@@ -1,6 +1,18 @@
 .time-session {
-  margin: 30px auto 10px auto;
+  margin: 30px auto 16px auto;
+  /* font-size: 1.8rem; */
+  /* font-weight: 600; */
+  width: 340px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px;
+  border: none;
+  border-radius: 10px;
+  /* margin: 10px auto auto auto; */
+  background-color: #80de6e;
 }
 .time-count {
   width: 340px;

@@ -1,5 +1,5 @@
 .time-form-template {
-  margin: 30px auto auto auto;
+  margin: 20px auto auto auto;
 }
 .form-input-text {
   display: block;
@@ -67,5 +67,5 @@
 }
 .up-arrow {
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }

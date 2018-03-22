@@ -20,13 +20,25 @@ class Pomotimer extends Component {
     console.log("Create "+name+" "+time+"sec");
     var sessions = this.state.sessions;
     var newSession = {sessionName:name,sessionTime:time,sessionType:"work"};
-    var breakSession = {sessionName:"Break",sessionTime:300,sessionType:"break"};
+    var workSessionsCount = 0;
+    sessions.forEach((session)=>{
+      //console.log(session.sessionType);
+      if(session.sessionType==="work") {
+        //console.log(workSessionsCount);
+        workSessionsCount++;
+      }
+    });
+    var breakSession = {
+      sessionName:workSessionsCount%4===0?"30 min Break":"5 min Break",
+      sessionTime: workSessionsCount%4===0?1800:300,
+      sessionType:"break"
+    };
     if(sessions.length > 0 && sessions[sessions.length-1].sessionType !== "break"){
       sessions.push(breakSession, newSession);
     } else {
       sessions.push(newSession);
     }
-    if(this.state.currentSession === null) {
+    if(this.state.currentSessionIndex === null) {
       this.setState({
         sessions: sessions,
         currentSession: {sessionName:name,sessionTime:time,sessionType:"work"},
@@ -64,18 +76,25 @@ class Pomotimer extends Component {
   }
   saveSession(name,time,i){
     let sessions = this.state.sessions;
-    console.log(i);
-    console.log(sessions[i].sessionName);
+    //console.log(i);
+    //console.log(time);
+    //console.log(sessions[i].sessionName);
     sessions[i].sessionName = name;
     sessions[i].sessionTime = time;
-    this.setState({sessions:sessions});
+    
+    this.setState({
+      sessions: sessions,
+      currentSession: sessions[i]
+    });
   }
 
   render() {
     return (
       <div>
         <TimeCount
+          sessions = {this.state.sessions}
           currentSession = {this.state.currentSession}
+          currentSessionIndex = {this.state.currentSessionIndex}
           getBreakSession = {()=>this.getBreakSession()}
         />
         <TimeForm
@@ -83,8 +102,8 @@ class Pomotimer extends Component {
         />
         <SessionNav
           sessions = {this.state.sessions}
-          currentSessionIndex= {this.state.currentSessionIndex}
           saveSession = {(name,time,i)=>this.saveSession(name,time,i)}
+          currentSessionIndex = {this.state.currentSessionIndex}
         />
       </div>
     )
