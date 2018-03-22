@@ -21,9 +21,9 @@ class App extends Component {
           <h1 className="App-title">POMOTIMER</h1>
 
         </header>
-        <section>
+        <div>
           <Pomotimer/>
-        </section>
+        </div>
       </div>
     );
   }

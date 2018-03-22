@@ -9,7 +9,7 @@
   border: 3px solid white;
   border-radius: 50%;
   margin: 4px auto 0 auto;
-  box-shadow: 0px 0px 6px 2px #4f4f4f;
+  box-shadow: #00ffc4 0px 0px 10px 2px, #00ffc4 0px 0px 20px 2px, #00ffc4 0px 0px 15px 1px inset;
 }
 .App-logo-needle {
   animation: App-logo-spin infinite 20s linear;
@@ -27,6 +27,7 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 1.5em;
   font-weight: bold;
+  text-shadow: #04fff0 0px 0px 7px, #04fff0 0px 0px 2px;
 }
 
 .App-intro {
@@ -36,4 +37,10 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+.Pomotimer-body {
+  padding-top: 30px;
+  position: relative;
+  bottom: 0px;
+  height: 100%;
 }

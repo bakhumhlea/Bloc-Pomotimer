@@ -41,15 +41,16 @@
 .session-nav-btn .session-nav-btn-popup {
   position: relative;
   float: right;
+  top: -10px;
+  right: -66px;
   color: #7b7b7b;
-  width: 60px;
+  width: 44px;
   font-size: 0.8rem;
   font-weight: 900;
-  padding: 2px 8px 2px 8px;
-  background-color: #ffffff;
-  top: -10px;
-  right: -82px;
+  text-align: left;
+  padding: 4px 8px 4px 8px;
   border-radius: 5px;
+  background-color: #ffffff;
   box-shadow: 0 0 4px 2px #c3bfff;
 }
 .session-button-all {
@@ -159,6 +160,23 @@ input[type=number].session-num::-webkit-outer-spin-button {
   border-radius: 6px;
   margin: 5px auto 8px auto;
   background-color: #e2c45e;
+}
+.delete-all-btn span {
+  position: relative;
+  z-index: 82;
+  font-size: 1.4rem;
+  font-weight: 900;
+  padding-top: 12px;
+  color: white;
+  text-shadow: red 0px 0px 50px, red 0px 0px 20px;
+}
+.delete-all-btn h4 {
+  position: relative;
+  z-index: 82;
+  color: #ffffff;
+  font-weight: 900;
+  margin-top: 16px;
+  text-shadow: #c108e0 0px 0px 50px, #e00862 0px 0px 20px;
 }
 .App-version {
   z-index: 82;

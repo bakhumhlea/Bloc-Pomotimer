@@ -1,7 +1,5 @@
 .time-session {
-  margin: 30px auto 16px auto;
-  /* font-size: 1.8rem; */
-  /* font-weight: 600; */
+  margin: 0 auto 16px auto;
   width: 340px;
   color: white;
   font-family: 'Montserrat', sans-serif;
@@ -11,7 +9,6 @@
   padding: 6px;
   border: none;
   border-radius: 10px;
-  /* margin: 10px auto auto auto; */
   background-color: #80de6e;
 }
 .time-count {
@@ -55,7 +52,16 @@
 }
 .time-start-btn:hover {
   transition: 0.1s 0s all ease-out;
-  background-color: #ff3838;
+  background-color: #e2401e;
+}
+.time-start-btn span {
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 2.0rem;
+  padding: 6px 0 0 0;
+  margin: 0 auto 0 auto;
+  text-shadow: rgb(255, 255, 255) 0px 0px 10px;
 }
 .time-done-btn {
   cursor: pointer;

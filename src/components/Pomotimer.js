@@ -39,6 +39,7 @@ class Pomotimer extends Component {
       sessions.push(newSession);
     }
     if(this.state.currentSessionIndex === null) {
+      console.log({sessionName:name,sessionTime:time,sessionType:"work"});
       this.setState({
         sessions: sessions,
         currentSession: {sessionName:name,sessionTime:time,sessionType:"work"},
@@ -75,22 +76,29 @@ class Pomotimer extends Component {
     }
   }
   saveSession(name,time,i){
-    let sessions = this.state.sessions;
+    let newSessions = this.state.sessions;
     //console.log(i);
     //console.log(time);
-    //console.log(sessions[i].sessionName);
-    sessions[i].sessionName = name;
-    sessions[i].sessionTime = time;
-    
+    console.log(newSessions[i].sessionName);
+    newSessions[i].sessionName = name;
+    newSessions[i].sessionTime = time;
+    let currentSession = newSessions[this.state.currentSessionIndex];
+    console.log(currentSession);
     this.setState({
-      sessions: sessions,
-      currentSession: sessions[i]
+      sessions: newSessions,
+      currentSession: currentSession
+    });
+  }
+  deleteAllSessions(e) {
+    e.preventDefault();
+    this.setState({
+      sessions:[],
     });
   }
 
   render() {
     return (
-      <div>
+      <div className="Pomotimer-body">
         <TimeCount
           sessions = {this.state.sessions}
           currentSession = {this.state.currentSession}
@@ -104,6 +112,7 @@ class Pomotimer extends Component {
           sessions = {this.state.sessions}
           saveSession = {(name,time,i)=>this.saveSession(name,time,i)}
           currentSessionIndex = {this.state.currentSessionIndex}
+          deleteAllSessions = {(e)=>this.deleteAllSessions(e)}
         />
       </div>
     )

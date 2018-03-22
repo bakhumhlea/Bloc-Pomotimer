@@ -90,8 +90,8 @@ class SessionNav extends Component {
     let hourInSec = parseInt(this.state.hours*60*60,10);
     let minInSec = parseInt(this.state.minutes*60,10);
     let sec = parseInt(this.state.seconds,10);
-    let totalTimeInSec = hourInSec+minInSec+sec===0 ? prevSession.sessionTime : hourInSec+minInSec+sec;
-    console.log("totalTimeInSec "+totalTimeInSec);
+    let totalTimeInSec = hourInSec+minInSec+sec;
+    //console.log("totalTimeInSec "+totalTimeInSec);
     this.props.saveSession(sessionName,totalTimeInSec,i);
     this.setState({
       currentlyEditSession: null,
@@ -100,6 +100,7 @@ class SessionNav extends Component {
       minutes: 0,
       seconds: 0,
     });
+    e.target.reset();
   }
   togglePopup(e) {
     e.preventDefault();
@@ -112,16 +113,36 @@ class SessionNav extends Component {
     var editSessionActive = this.state.currentlyEditSession;
     var editorActiveStyle = function(i) {
       if(editSessionActive===i){
-        return {boxShadow: "0 0 10px 2px #67ff67, 0 0 40px 2px #67ff67, 0 0 20px 2px #67ff67 inset",
+        return {
+          boxShadow: "0 0 10px 2px red, 0 0 40px 2px red, 0 0 20px 2px red inset",
           color: "white",
           opacity: 1,
-          textShadow: "#67ff67 0px 0px 50px, #67ff67 0px 0px 20px",
+          textShadow: "red 0px 0px 50px, red 0px 0px 20px",
           border: "2px solid white"
         };
       } else {
         return {boxShadow: "none", opacity:0.5, textShadow:"none"};
       }
     };
+    var activeButtonStyle = (i)=>{
+      if (this.state.sessions[i].sessionType==="break") {
+        console.log("break");
+        return {
+          boxShadow: "0 0 10px 2px #67ff67, 0 0 40px 2px #67ff67, 0 0 20px 2px #67ff67 inset",
+          opacity: 1,
+          textShadow: "#67ff67 0px 0px 50px, #67ff67 0px 0px 20px",
+          border: "2px solid white",
+          color: "white"
+        };
+      } else {
+        console.log("work");
+        return {
+          boxShadow: "0 0 10px 2px #ff00de, 0 0 40px 2px #ff00de, 0 0 20px 2px #ff00de inset",
+          opacity: 1,
+          textShadow: "rgb(255, 0, 222) 0px 0px 50px, rgb(255, 0, 222) 0px 0px 20px"
+        };
+      }
+    }
     return (
       <div className="session-nav" style={this.state.sessionsNav?{left:0}:{left:"-262px"}}>
         <h3><span className="fas fa-bars"></span></h3>
@@ -130,7 +151,7 @@ class SessionNav extends Component {
             <div
               className={session.sessionType==="work"?"session-button work":"session-button break"}
               key={index}
-              style={this.props.currentSessionIndex===index?{boxShadow: "0 0 10px 2px #ff00de, 0 0 40px 2px #ff00de, 0 0 20px 2px #ff00de inset", opacity: 1,textShadow: "rgb(255, 0, 222) 0px 0px 50px, rgb(255, 0, 222) 0px 0px 20px"}:editorActiveStyle(index)}
+              style={this.props.currentSessionIndex===index?activeButtonStyle(index):editorActiveStyle(index)}
             >
                 <h4 className="session-name"><strong>{session.sessionName}</strong></h4>
                 <small>{this.handleTimeString(session.sessionTime)}
@@ -142,18 +163,20 @@ class SessionNav extends Component {
 
                 </small>
                 <div className="session-editor" style={this.state.currentlyEditSession===index?{display:"block"}:{display:"none",border:"none"}}>
+                <form onSubmit={(e,prevSession,i)=>this.handleSubmit(e,session,index)} >
                   <input type="text" className="session-name" alt="session-name" placeholder={this.state.sessionName}
                     onChange={(e)=>this.handleInputSessionName(e)} />
-                  <input type="number" className="session-num" alt="hours" placeholder={this.state.hours>0?"hh":this.state.hours} min="0" max="99"
+                  <input type="number" className="session-num" alt="hours" placeholder={this.state.hours<10?"0"+this.state.hours:this.state.hours} min="0" max="99"
                     onChange={(e)=>this.handleInputHr(e)} />
-                  <input type="number" className="session-num" alt="minutes" placeholder={this.state.minutes===0?"00":this.state.minutes} min="0" max="59"
+                  <input type="number" className="session-num" alt="minutes" placeholder={this.state.minutes<10?"0"+this.state.minutes:this.state.minutes} min="0" max="59"
                     onChange={(e)=>this.handleInputMin(e)} />
-                  <input type="number" className="session-num" alt="seconds" placeholder={this.state.seconds===0?"00":this.state.seconds} min="0" max="59"
+                  <input type="number" className="session-num" alt="seconds" placeholder={this.state.seconds<10?"0"+this.state.seconds:this.state.seconds} min="0" max="59"
                     onChange={(e)=>this.handleInputSec(e)} />
-                  <button onClick={(e,prevSession,i)=>this.handleSubmit(e,session,index)} type="submit" className="session-save" alt="save"
+                  <button type="submit" className="session-save" alt="save"
                   >
                     Save
                   </button>
+                </form>
                 </div>
           </div>
           )}
@@ -166,7 +189,7 @@ class SessionNav extends Component {
           <span className="fas fa-chevron-left"></span>
           <div className="session-nav-btn-popup" style={this.state.popup&&!this.state.sessionsNav?{display:"block"}:{display:"none"}}>Session Config</div>
         </div>
-        <p className="App-version">v0.23</p>
+        <div className="delete-all-btn">{this.props.sessions.length>0?(<span className="fas fa-trash-alt" onClick={(e)=>this.props.deleteAllSessions(e)}></span>):(<h4>No Session</h4>)}</div>
       </div>
     )
   }

@@ -20,6 +20,13 @@ class TimeForm extends Component {
       error: ""
     });
   }
+  componentsDidUpdate(prevProps,prevState) {
+    this.setState({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
+  }
   handleInputSessionName(e) {
     e.preventDefault();
     this.setState({session: e.target.value});
@@ -42,6 +49,14 @@ class TimeForm extends Component {
       this.setState({error: ""});
     }, 3000);
   }
+
+  handleResetForm() {
+    this.setState({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
+  }
   handleSubmit(e,name) {
     e.preventDefault();
     let sessionName = name==="" ? "Work Session" : name ;
@@ -51,18 +66,16 @@ class TimeForm extends Component {
     let sessionTime = hourInSec+minInSec+sec;
     console.log(this.state.hours);
     console.log(sessionTime);
-    if(sessionTime === 0) {
-      this.props.setTime(sessionName,25*60);
-      this.setState({
-        error: "Set default session 25 minutes"
-      });
-      this.handleError();
-    } else {
-      this.props.setTime(sessionName,sessionTime);
-      this.setState({
-        error: ""
-      });
-    }
+    let noInput = sessionTime===0? true:false;
+    this.props.setTime(sessionName,noInput?25*60:sessionTime);
+    this.setState({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      error: noInput?"Set default session 25 minutes":""
+    });
+    this.handleError();
+    e.target.reset();
   }
 
   render() {
