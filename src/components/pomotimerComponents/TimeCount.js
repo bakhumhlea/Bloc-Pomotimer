@@ -39,7 +39,7 @@ class TimeCount extends Component {
         countTime:this.props.currentSession.sessionTime
       });
     }
-    if(this.props.currentSessionIndex!==prevProps.currentSessionIndex) {
+    if(this.props.currentSessionIndex!==prevProps.currentSessionIndex&&this.props.currentSession!==null) {
       console.log("currentSessionIndex changed");
       //console.log(this.state.countTime);
       this.handleTimeDisplay(this.props.currentSession.sessionTime);
@@ -48,6 +48,7 @@ class TimeCount extends Component {
         countTime:this.props.currentSession.sessionTime
       });
     }
+    //below this is handle timechange//
     if((this.state.timerStatus!==prevState.timerStatus)&&(this.state.countTime > 0)) {
       console.log("timerStatus changed");
       switch (this.state.timerStatus) {
@@ -69,12 +70,18 @@ class TimeCount extends Component {
     }
     if(this.state.timerStatus==="counting" && this.state.countTime===0) {
       console.log("time done!");
+      console.log("current index"+this.props.currentSessionIndex);
+
       this.props.getBreakSession();
+      let willCompleteSession = this.props.currentSession
+      this.props.handleHistory(willCompleteSession,this.props.currentSessionIndex);
+      console.log("current time"+this.props.currentSession.sessionTime);
       this.setState({
         timerStatus:"standBy",
         countTime: this.props.currentSession.sessionTime,
         soundStatus: Sound.status.PLAYING
       });
+      this.props.timerStatus("standBy");
     }
   }
 
@@ -87,8 +94,10 @@ class TimeCount extends Component {
         countTime:nextProps.currentSession.sessionTime,
         soundStatus: Sound.status.STOPPED
       });
-    } else {
+    } else if (nextProps.sessions.length===0) {
       this.setState({
+        currentSession:null,
+        countTime:0,
         timerStatus: "standBy",
         hours: "00",
         minutes: "00",
@@ -118,12 +127,15 @@ class TimeCount extends Component {
     if(this.state.timerStatus==="standBy" && this.state.countTime > 0) {
       this.handleSoundStatus();
       this.setState({timerStatus:"counting",soundStatus:Sound.status.PAUSED});
+      this.props.timerStatus("counting");
     } else if (this.state.timerStatus==="counting") {
       this.handleSoundStatus();
       this.setState({timerStatus:"paused"});
+      this.props.timerStatus("paused");
     } else if (this.state.timerStatus==="paused"){
       this.handleSoundStatus();
       this.setState({timerStatus:"counting"});
+      this.props.timerStatus("counting");
     }
   }
   handleReset(e) {
@@ -134,6 +146,7 @@ class TimeCount extends Component {
       timerStatus:"standBy",
       countTime: this.props.currentSession.sessionTime
     });
+    this.props.timerStatus("standBy");
   }
 
   startTimer() {

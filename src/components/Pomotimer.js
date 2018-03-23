@@ -10,9 +10,11 @@ class Pomotimer extends Component {
     super(props);
     this.state = {
       sessions: [],
+      history: [],
       currentSession: null,
       currentSessionIndex: null,
-      onBreak: false
+      onBreak: false,
+      timerStatus: "standBy"
     };
   }
 
@@ -51,6 +53,13 @@ class Pomotimer extends Component {
       });
     }
   }
+  addSession(session) {
+    let sessions = this.state.sessions;
+    sessions.push(session);
+    this.setState({
+      sessions: sessions
+    });
+  }
 
   getBreakSession() {
     console.log(this.state.sessions.length);
@@ -75,6 +84,15 @@ class Pomotimer extends Component {
       }
     }
   }
+  //add history remove complete item//
+  handleHistory(session,i) {
+    console.log(session);
+    let history = this.state.history;
+    history.push(session);
+    this.setState({
+      history: history,
+    })
+  }
   saveSession(name,time,i){
     let newSessions = this.state.sessions;
     //console.log(i);
@@ -93,6 +111,15 @@ class Pomotimer extends Component {
     e.preventDefault();
     this.setState({
       sessions:[],
+      history:[],
+      currentSession: null,
+      currentSessionIndex: null
+    });
+  }
+
+  timerStatus(status) {
+    this.setState({
+      timerStatus: status
     });
   }
 
@@ -104,6 +131,8 @@ class Pomotimer extends Component {
           currentSession = {this.state.currentSession}
           currentSessionIndex = {this.state.currentSessionIndex}
           getBreakSession = {()=>this.getBreakSession()}
+          timerStatus = {(status)=>this.timerStatus(status)}
+          handleHistory = {(session,i)=>this.handleHistory(session,i)}
         />
         <TimeForm
           setTime = {(name,time)=>this.setTime(name,time)}
@@ -113,6 +142,9 @@ class Pomotimer extends Component {
           saveSession = {(name,time,i)=>this.saveSession(name,time,i)}
           currentSessionIndex = {this.state.currentSessionIndex}
           deleteAllSessions = {(e)=>this.deleteAllSessions(e)}
+          timerStatus = {this.state.timerStatus}
+          history = {this.state.history}
+          addCompletedToSession = {(session)=>this.addSession(session)}
         />
       </div>
     )

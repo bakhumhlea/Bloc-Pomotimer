@@ -13,6 +13,7 @@ class SessionNav extends Component {
       minutes: null,
       seconds: null,
       popup: false,
+      historyNavOpen: false
     };
   }
 
@@ -22,14 +23,21 @@ class SessionNav extends Component {
 
   handleOpenNav(e){
     e.preventDefault();
-    var boolean = this.state.sessionsNav?false:true;
-    this.setState({sessionsNav: boolean});
+    var navOpen = this.state.sessionsNav?false:true;
+    this.setState({
+      sessionsNav: navOpen,
+      historyNavOpen: false,
+      currentlyEditSession: null
+    });
   }
 
   openEditor(e, prevSession, i) {
     //console.log(prevSession);
     //console.log(i);
     e.preventDefault();
+    if(this.props.currentSessionIndex===i&&this.props.timerStatus!=="standBy") {
+      return
+    }
     var timeDigest = this.handleTimeDigest(prevSession.sessionTime);
     this.setState({
       currentlyEditSession: i,
@@ -102,10 +110,22 @@ class SessionNav extends Component {
     });
     e.target.reset();
   }
+  addSession(e,session) {
+    e.preventDefault();
+    this.props.addCompletedToSession(session);
+  }
   togglePopup(e) {
     e.preventDefault();
     this.setState({
       popup: this.state.popup?false:true
+    });
+  }
+  toggleHistoryNav(e) {
+    e.preventDefault();
+    console.log(this.state.historyNavOpen);
+    console.log("On/Off his nav");
+    this.setState({
+      historyNavOpen: this.state.historyNavOpen?false:true
     });
   }
   //{color: "white", text-shadow: "rgb(255, 0, 222) 0px 0px 50px, rgb(255, 0, 222) 0px 0px 20px"}
@@ -143,27 +163,46 @@ class SessionNav extends Component {
         };
       }
     }
+    let upcommingSessions = this.props.sessions.slice(this.props.currentSessionIndex);
     return (
       <div className="session-nav" style={this.state.sessionsNav?{left:0}:{left:"-262px"}}>
-        <h3><span className="fas fa-bars"></span></h3>
+        <h3>
+          {this.state.historyNavOpen?
+            <span className="fas fa-bars" onClick={(e)=>this.toggleHistoryNav(e)}></span>:
+            <span className="fas fa-history" onClick={(e)=>this.toggleHistoryNav(e)}></span>
+          }
+        </h3>
+          <div className="session-history" style={this.state.historyNavOpen?{opacity:0.9,bottom:"60px"}:{opacity:0,bottom:"-360px"}}>
+            <h4>Completed Sessions</h4>
+            <div className="session-history-item">
+              {this.props.history.length===0?(<span id="no-history"><small>No complete session</small></span>):this.props.history.map((hisSes,hisIndex)=>
+                <div className="session-complete">
+                  <span id="his-item-name">{hisSes.sessionName}</span>
+                  <span id="history-add-btn" onClick={(e,session)=>this.addSession(e,hisSes)} className="fas fa-plus"></span><br/>
+                  <span id="his-item-time">{this.handleTimeString(hisSes.sessionTime)}</span>
+
+                </div>
+              )}
+            </div>
+          </div>
           <div className="session-button-all">
-          {this.props.sessions.map((session,index)=>
+          {upcommingSessions.map((session,index)=>
             <div
               className={session.sessionType==="work"?"session-button work":"session-button break"}
               key={index}
-              style={this.props.currentSessionIndex===index?activeButtonStyle(index):editorActiveStyle(index)}
+              style={this.props.currentSessionIndex===index+this.props.currentSessionIndex?activeButtonStyle(index+this.props.currentSessionIndex):editorActiveStyle(index)}
             >
-                <h4 className="session-name"><strong>{session.sessionName}</strong></h4>
-                <small>{this.handleTimeString(session.sessionTime)}
-                  {this.state.currentlyEditSession===index?
-                    <span id={index} className="fas fa-times-circle" onClick={(e,object,i)=>this.openEditor(e,session,null)}></span>
-                    :
-                    <span id={index} className="fas fa-pen-square" onClick={(e,object,i)=>this.openEditor(e,session,index)}></span>
-                  }
+              <h4 className="session-name"><strong>{session.sessionName}</strong></h4>
+              <small>{this.handleTimeString(session.sessionTime)}
+                {this.state.currentlyEditSession===index?
+                  <span id={index} className="fas fa-times-circle" onClick={(e,object,i)=>this.openEditor(e,session,null)}></span>
+                  :
+                  <span id={index} className="fas fa-pen-square" onClick={(e,object,i)=>this.openEditor(e,session,index)}></span>
+                }
 
-                </small>
-                <div className="session-editor" style={this.state.currentlyEditSession===index?{display:"block"}:{display:"none",border:"none"}}>
-                <form onSubmit={(e,prevSession,i)=>this.handleSubmit(e,session,index)} >
+              </small>
+              <div className="session-editor" style={this.state.currentlyEditSession===index?{display:"block"}:{display:"none",border:"none"}}>
+                <form onSubmit={(e,prevSession,i)=>this.handleSubmit(e,session,this.props.currentSessionIndex+index)} >
                   <input type="text" className="session-name" alt="session-name" placeholder={this.state.sessionName}
                     onChange={(e)=>this.handleInputSessionName(e)} />
                   <input type="number" className="session-num" alt="hours" placeholder={this.state.hours<10?"0"+this.state.hours:this.state.hours} min="0" max="99"
@@ -177,8 +216,8 @@ class SessionNav extends Component {
                     Save
                   </button>
                 </form>
-                </div>
-          </div>
+              </div>
+            </div>
           )}
           </div>
         <div className="session-nav-btn"
