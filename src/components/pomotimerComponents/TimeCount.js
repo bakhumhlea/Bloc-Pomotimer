@@ -18,7 +18,12 @@ class TimeCount extends Component {
     this.soundFiles = [
       { url: "http://samplearena.com/cdrom/sa1/brass/16_brass_hook/brass_hook_demo.mp3",
         title: "Brass",
-        duration: 0.26 }
+        duration: 0.01
+      },
+      { url: "http://www.subatomicglue.com/9090l0g/BDnodiode.wav",
+        title: "Bass",
+        duration: 0.01
+      }
     ];
   }
 
@@ -94,7 +99,16 @@ class TimeCount extends Component {
         countTime:nextProps.currentSession.sessionTime,
         soundStatus: Sound.status.STOPPED
       });
+    /**} else if (nextProps.sessions[this.props.currentSessionIndex]!==this.state.currentSession) {
+      console.log("Bingo");
+      this.handleTimeDisplay(nextProps.sessions[this.props.currentSessionIndex].sessionTime);
+      this.setState({
+        currentSession:nextProps.sessions[this.props.currentSessionIndex],
+        countTime:nextProps.sessions[this.props.currentSessionIndex].sessionTime,
+        soundStatus: Sound.status.STOPPED
+      });**/
     } else if (nextProps.sessions.length===0) {
+      console.log("Delete all session");
       this.setState({
         currentSession:null,
         countTime:0,
@@ -108,10 +122,10 @@ class TimeCount extends Component {
 
   handleTimeDisplay(timeInSec) {
     //console.log(this.state.soundStatus);
-    //console.log("to string "+timeInSec);
-    let hours = Math.floor(timeInSec/3600);
-    let minutes = Math.floor((timeInSec%3600)/60);
-    let seconds = Math.floor(((timeInSec%3600)%60));
+    console.log("to string "+timeInSec);
+    let hours = Math.floor(parseInt(timeInSec,10)/3600);
+    let minutes = Math.floor((parseInt(timeInSec,10)%3600)/60);
+    let seconds = Math.floor(((parseInt(timeInSec,10)%3600)%60));
     let hh = hours < 10 ? "0"+hours : hours;
     let mm = minutes < 10 ? "0"+minutes : minutes;
     let ss = seconds < 10 ? "0"+seconds : seconds;
@@ -170,7 +184,10 @@ class TimeCount extends Component {
   render() {
       var styles = ()=> {
         if (this.state.timerStatus==="standBy") {
-          return {color: "white"};
+          return {
+            color: "white",
+            textShadow: "0 0 1px white, 0 0 15px white"
+        };
         } else if (this.props.currentSession.sessionType==="break"&&this.state.timerStatus==="counting") {
           return {
             color: "white",
@@ -209,12 +226,11 @@ class TimeCount extends Component {
       return (
         <div className="pomotimer-com">
           <Sound
-            url={this.soundFiles[0].url}
+            url={this.soundFiles[1].url}
             playStatus={this.state.soundStatus}
             playFromPosition={0 /* in milliseconds */}
             onFinishedPlaying={()=>this.handleSoundStatus()}
           />
-          <audio id="myTune" src="Vitas-7th-Element.mp3"></audio>
           <h3 className="time-session">{this.props.currentSession===null?"New Session":this.props.currentSession.sessionName}</h3>
           <div className="time-count" style={ styles() }>
             <span className="time-digit">{this.state.hours}</span>

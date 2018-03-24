@@ -8,7 +8,7 @@
   font-size: 1.6rem;
   border: 3px solid white;
   border-radius: 50%;
-  margin: 4px auto 0 auto;
+  margin: 7px auto 0 auto;
   box-shadow: #00ffc4 0px 0px 10px 2px, #00ffc4 0px 0px 20px 2px, #00ffc4 0px 0px 15px 1px inset;
 }
 .App-logo-needle {
@@ -17,17 +17,23 @@
 }
 
 .App-header {
-  background-color: #0e1223;
+  background-color: #101325;
   height: 120px;
   padding: 20px;
   color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 8;
+  box-shadow: 0 0 28px 0px #449fb9, 0 0 10px 0px #449fb9,  0 0 5px 0px #449fb9;
 }
 
 .App-title {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.5em;
   font-weight: bold;
-  text-shadow: #04fff0 0px 0px 7px, #04fff0 0px 0px 2px;
+  text-shadow: #04fff0 0px 0px 30px, #04fff0 0px 0px 8px;
 }
 
 .App-intro {
@@ -39,8 +45,13 @@
   to { transform: rotate(360deg); }
 }
 .Pomotimer-body {
-  padding-top: 30px;
-  position: relative;
+  padding-top: 20px;
+  position: absolute;
+  top: 160px;
   bottom: 0px;
-  height: 100%;
+  right: 0;
+  left: 0;
+  background-color: #090b13;
+  z-index: 8;
+  box-shadow: 0 0 28px 0px #449fb9, 0 0 10px 0px #449fb9, 0 0 5px 0px #449fb9;
 }

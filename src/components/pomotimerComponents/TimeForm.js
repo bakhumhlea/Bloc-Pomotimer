@@ -60,6 +60,7 @@ class TimeForm extends Component {
     console.log(hourInSec+minInSec+sec);
     this.props.setTime(sessionName,sessionTime===0?25*60:sessionTime);
     this.setState({
+      session: "",
       hours: "",
       minutes: "",
       seconds: "",
@@ -77,6 +78,7 @@ class TimeForm extends Component {
         <div className="form-error">{this.state.error}</div>
         <form onSubmit={(e,name)=>this.handleSubmit(e,this.state.session)}>
           <input type="text" className="form-input-text" alt="session-name" placeholder="Session Name"
+            value={this.state.session}
             onChange={(e)=>this.handleInputSessionName(e)} />
           <input type="number" className="form-input-num" alt="hours" placeholder="h"
             min="0" max="99" value={this.state.hours}

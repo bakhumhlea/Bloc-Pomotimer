@@ -60,6 +60,24 @@ class Pomotimer extends Component {
       sessions: sessions
     });
   }
+  updateSessions(newSessions) {
+    var newSessionCopy = newSessions;
+    //console.log(newSessions);
+    for (var i=1; i < newSessionCopy.length ;i++) {
+      var adjacentSameName = newSessionCopy[i-1].sessionName===newSessionCopy[i].sessionName;
+      var adjacentSameType = newSessionCopy[i-1].sessionType===newSessionCopy[i].sessionType;
+      if (adjacentSameName && adjacentSameType) {
+        newSessionCopy[i-1].sessionTime += newSessionCopy[i].sessionTime;
+        newSessionCopy.splice(i,1);
+      } else {
+        console.log("Skip");
+      }
+    }
+    this.setState({
+      sessions:newSessionCopy,
+      currentSession:newSessionCopy[this.state.currentSessionIndex]
+    });
+  }
 
   getBreakSession() {
     console.log(this.state.sessions.length);
@@ -100,12 +118,18 @@ class Pomotimer extends Component {
     console.log(newSessions[i].sessionName);
     newSessions[i].sessionName = name;
     newSessions[i].sessionTime = time;
-    let currentSession = newSessions[this.state.currentSessionIndex];
+    let currentSession = newSessions[i];
     console.log(currentSession);
     this.setState({
+      currentSession: newSessions[this.state.currentSessionIndex],
       sessions: newSessions,
-      currentSession: currentSession
     });
+  }
+  deleteSession(index) {
+    let sessions = this.state.sessions;
+    console.log(index);
+    sessions.splice(index,1);
+    this.updateSessions(sessions);
   }
   deleteAllSessions(e) {
     e.preventDefault();
@@ -145,6 +169,8 @@ class Pomotimer extends Component {
           timerStatus = {this.state.timerStatus}
           history = {this.state.history}
           addCompletedToSession = {(session)=>this.addSession(session)}
+          updateSessions = {(newSessions)=>this.updateSessions(newSessions)}
+          deleteSession = {(index)=>this.deleteSession(index)}
         />
       </div>
     )

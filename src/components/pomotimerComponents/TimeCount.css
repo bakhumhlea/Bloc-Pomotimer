@@ -1,5 +1,5 @@
 .time-session {
-  margin: 0 auto 16px auto;
+  margin: 7px auto 0 auto;
   width: 340px;
   color: white;
   font-family: 'Montserrat', sans-serif;
@@ -7,9 +7,10 @@
   font-weight: 600;
   text-align: center;
   padding: 6px;
-  border: none;
+  text-shadow: #fbee6e 0px 0px 10px, #fbee6e 0px 0px 40px;
+  /*border: 3px solid white;
   border-radius: 10px;
-  background-color: #80de6e;
+  box-shadow: #fbee6e 0px 0px 10px 0px, #fbee6e 0px 0px 30px 2px, #fbee6e 0px 0px 15px 2px inset;*/
 }
 .time-count {
   width: 340px;
@@ -19,12 +20,12 @@
   font-weight: bolder;
   padding: 0 4px 0 4px;
   border-radius: 12px;
-  margin: 10px auto auto auto;
-  background-color: #222222;
-  box-shadow: 0px 0px 8px 4px #b7b7b7;
+  margin: 0 auto auto auto;
+  /*box-shadow: 0px 0px 8px 4px #b7b7b7;*/
 }
 .time-digit {
-  color: #eee;
+  color: white;
+  font-weight: 800;
 }
 .time-status {
   width: 350px;
@@ -44,15 +45,18 @@
   font-weight: 600;
   text-align: center;
   padding: 4px;
-  border: none;
-  border-radius: 16px;
-  margin: 10px auto auto auto;
-  background-color: #e21e1e;
+  border: 3px solid white;
+  border-radius: 30px;
+  margin: 10px 5px auto auto;
+  background-color: #090b13;
+  text-shadow: #80ea2b 0px 0px 5px, #80ea2b 0px 0px 15px;
+  box-shadow: #80ea2b 0px 0px 6px 0px, #80ea2b 0px 0px 20px 0px, #80ea2b 0px 0px 12px 0px inset;
   outline: none;
 }
 .time-start-btn:hover {
-  transition: 0.1s 0s all ease-out;
-  background-color: #e2401e;
+  transition: 0.3s 0s all ease-out;
+  text-shadow: #80ea2b 0px 0px 10px, #80ea2b 0px 0px 30px;
+  box-shadow: #80ea2b 0px 0px 10px 0px, #80ea2b 0px 0px 30px 0px, #80ea2b 0px 0px 20px 0px inset;
 }
 .time-start-btn span {
   display: block;
@@ -74,9 +78,9 @@
   text-align: center;
   padding: 4px;
   border: none;
-  border-radius: 16px;
+  border-radius: 30px;
   margin: 10px auto auto auto;
-  background-color: #02885b;
+  background-color: #090b13;
   outline: none;
 }
 .time-reset-btn {
@@ -89,11 +93,16 @@
   font-size: 1.8rem;
   font-weight: 600;
   text-align: center;
-  padding: 4px;
-  border: none;
-  border-radius: 16px;
+  padding: 4px 4px 4px 4px;
+  border: 3px solid white;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
   margin: 10px 5px auto auto;
-  background-color: #80ea2b;
+  background-color: #090b13;
+  text-shadow: #80ea2b 0px 0px 1px, #80ea2b 0px 0px 30px;
+  box-shadow: #80ea2b 0px 0px 5px 0px, #80ea2b 0px 0px 20px 0px, #80ea2b 0px 0px 15px 0px inset;
   outline: none;
 }
 .time-pause-btn {
@@ -106,10 +115,14 @@
   font-size: 1.8rem;
   font-weight: 600;
   text-align: center;
-  padding: 4px;
-  border: none;
-  border-radius: 16px;
-  margin: 10px auto auto 5px;
-  background-color: #f51f1f;
+  border: 3px solid white;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  margin: 10px 5px auto auto;
+  background-color: #090b13;
+  text-shadow: #f51f1f 0px 0px 10px, #f51f1f 0px 0px 40px;
+  box-shadow: #f51f1f 0px 0px 10px 0px, #f51f1f 0px 0px 30px 2px, #f51f1f 0px 0px 15px 2px inset;
   outline: none;
 }

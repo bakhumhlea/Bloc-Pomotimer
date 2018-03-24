@@ -8,10 +8,10 @@ class SessionNav extends Component {
       sessions: null,
       sessionsNav: false,
       currentlyEditSession: null,
-      sessionName: null,
-      hours: null,
-      minutes: null,
-      seconds: null,
+      sessionName: "",
+      hours: "",
+      minutes: "",
+      seconds: "",
       popup: false,
       historyNavOpen: false
     };
@@ -98,21 +98,61 @@ class SessionNav extends Component {
     let hourInSec = parseInt(this.state.hours*60*60,10);
     let minInSec = parseInt(this.state.minutes*60,10);
     let sec = parseInt(this.state.seconds,10);
-    let totalTimeInSec = hourInSec+minInSec+sec;
+    let totalTimeInSec = parseInt(hourInSec+minInSec+sec,10)===0?25*60:parseInt(hourInSec+minInSec+sec,10);
     //console.log("totalTimeInSec "+totalTimeInSec);
     this.props.saveSession(sessionName,totalTimeInSec,i);
+    //console.log(i);
     this.setState({
       currentlyEditSession: null,
       sessionName: null,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
+      hours: "",
+      minutes: "",
+      seconds: "",
     });
     e.target.reset();
   }
-  addSession(e,session) {
+  handleAddSession(e,session) {
     e.preventDefault();
     this.props.addCompletedToSession(session);
+  }
+  handleDeleteSession(e,i) {
+    e.preventDefault();
+    this.props.deleteSession(i);
+  }
+  handleArrangeButton(e, position, currentIndex) {
+    e.preventDefault();
+    console.log(position);
+    let sessions = this.props.sessions;
+    let oldPosition = this.props.currentSessionIndex+currentIndex;
+    let newPosition = this.props.currentSessionIndex+currentIndex+position;
+    //let mergeSession = sessions[newPosition+position].sessionName===session.sessionName && sessions[newPosition+position].sessionType===session.sessionType?true:false;
+    if (position===(-1)) {
+      if (currentIndex===0) {
+        return
+      } else {
+        let session = sessions[oldPosition];
+        console.log("Just move");
+        sessions.splice(oldPosition,1);
+        sessions.splice(newPosition,0,session);
+      }
+      this.props.updateSessions(sessions)
+    } else {
+      if (currentIndex===sessions.length-1) {
+        return
+      } else {
+        let session = sessions[oldPosition];
+        console.log("Just move");
+        sessions.splice(oldPosition,1);
+        sessions.splice(newPosition,0,session);
+      }
+      this.props.updateSessions(sessions)
+    }
+  }
+  handleSubButtonActive(e,i) {
+    e.preventDefault();
+    this.setState({
+      subButtonActive: i
+    })
   }
   togglePopup(e) {
     e.preventDefault();
@@ -178,9 +218,8 @@ class SessionNav extends Component {
               {this.props.history.length===0?(<span id="no-history"><small>No complete session</small></span>):this.props.history.map((hisSes,hisIndex)=>
                 <div className="session-complete">
                   <span id="his-item-name">{hisSes.sessionName}</span>
-                  <span id="history-add-btn" onClick={(e,session)=>this.addSession(e,hisSes)} className="fas fa-plus"></span><br/>
+                  <span id="history-add-btn" onClick={(e,session)=>this.handleAddSession(e,hisSes)} className="fas fa-plus"></span><br/>
                   <span id="his-item-time">{this.handleTimeString(hisSes.sessionTime)}</span>
-
                 </div>
               )}
             </div>
@@ -190,17 +229,28 @@ class SessionNav extends Component {
             <div
               className={session.sessionType==="work"?"session-button work":"session-button break"}
               key={index}
+              onMouseEnter={(e,i)=>this.handleSubButtonActive(e,index)}
+              onMouseLeave={(e,i)=>this.handleSubButtonActive(e,null)}
               style={this.props.currentSessionIndex===index+this.props.currentSessionIndex?activeButtonStyle(index+this.props.currentSessionIndex):editorActiveStyle(index)}
             >
-              <h4 className="session-name"><strong>{session.sessionName}</strong></h4>
-              <small>{this.handleTimeString(session.sessionTime)}
+              <h4 className="session-name">
+                <div className="session-arrange-btn"  style={this.state.subButtonActive===index?{opacity:0.9}:{opacity:0}}>
+                  <span className="fas fa-caret-up" onClick={(e,position,currentIndex)=>this.handleArrangeButton(e,(-1),index)}></span><br/>
+                  <span className="fas fa-caret-down" onClick={(e,position,currentIndex)=>this.handleArrangeButton(e,1,index)}></span>
+                </div>
+                <strong>{session.sessionName}</strong>
+                <div className="session-delete-btn"  style={this.state.subButtonActive===index?{opacity:0.9}:{opacity:0}}>
+                  <span className="fas fa-minus-circle" onClick={(e,i)=>this.handleDeleteSession(e,index+this.props.currentSessionIndex)}></span>
+                </div>
+              </h4>
+              <h5 className="session-time">{this.handleTimeString(session.sessionTime)}
                 {this.state.currentlyEditSession===index?
                   <span id={index} className="fas fa-times-circle" onClick={(e,object,i)=>this.openEditor(e,session,null)}></span>
                   :
                   <span id={index} className="fas fa-pen-square" onClick={(e,object,i)=>this.openEditor(e,session,index)}></span>
                 }
 
-              </small>
+              </h5>
               <div className="session-editor" style={this.state.currentlyEditSession===index?{display:"block"}:{display:"none",border:"none"}}>
                 <form onSubmit={(e,prevSession,i)=>this.handleSubmit(e,session,this.props.currentSessionIndex+index)} >
                   <input type="text" className="session-name" alt="session-name" placeholder={this.state.sessionName}
@@ -228,7 +278,7 @@ class SessionNav extends Component {
           <span className="fas fa-chevron-left"></span>
           <div className="session-nav-btn-popup" style={this.state.popup&&!this.state.sessionsNav?{display:"block"}:{display:"none"}}>Session Config</div>
         </div>
-        <div className="delete-all-btn">{this.props.sessions.length>0?(<span className="fas fa-trash-alt" onClick={(e)=>this.props.deleteAllSessions(e)}></span>):(<h4>No Session</h4>)}</div>
+        <div className="delete-all-btn">{this.props.sessions.length>0?(<span className="fas fa-trash" onClick={(e)=>this.props.deleteAllSessions(e)}></span>):(<h4>No Session</h4>)}</div>
       </div>
     )
   }

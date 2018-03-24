@@ -17,6 +17,12 @@
   font-weight: bolder;
   margin: 20px auto 0px auto;
 }
+.session-nav h3 span {
+  cursor: pointer;
+  padding-bottom: 10px;
+  display: block;
+  position: relative;
+}
 .session-nav-btn {
   z-index: 1;
   cursor: grab;
@@ -38,30 +44,33 @@
   top: 20px;
   left: 15px;
   position: relative;
+  text-shadow: white 0px 0px 1px, white 0px 0px 4px;
 }
 .session-nav-btn .session-nav-btn-popup {
   position: relative;
   float: right;
   top: -10px;
   right: -66px;
-  color: #7b7b7b;
+  color: white;
   width: 44px;
   font-size: 0.8rem;
   font-weight: 900;
   text-align: left;
   padding: 4px 8px 4px 8px;
-  border-radius: 5px;
-  background-color: #ffffff;
-  box-shadow: 0 0 4px 2px #c3bfff;
+  border-radius: 8px;
+  background-color: none;
+  border: 2px solid white;
+  text-shadow: white 0px 0px 1px, white 0px 0px 15px;
+  box-shadow: #ec0a71 0px 0px 4px 2px, #ec0a71 0px 0px 12px 2px, #ec0a71 0px 0px 10px 2px inset;
 }
 .session-button-all {
   z-index: 10;
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 490px;
   display: flex;
   flex-direction: column;
-  padding-top: 16px;
+  padding-top: 24px;
   padding-bottom: 16px;
   align-items: center;
   margin: auto auto auto auto;
@@ -95,14 +104,14 @@ div.session-button-all::-webkit-scrollbar {
 }
 div.session-button-all::-webkit-scrollbar-track {
   z-index: 80;
-  background-color: rgb(14, 22, 51);
+  background-color: #090d1d);
   border-radius: 3px;
 }
 
 div.session-button-all::-webkit-scrollbar-thumb {
   z-index: 80;
   background-color: rgb(6, 9, 21);
-  border: 1px solid rgb(25, 37, 82);
+  border: 0px solid rgb(25, 37, 82);
   outline: 1px solid red;
   border-radius: 3px;
 }
@@ -117,11 +126,31 @@ div.session-button-all::-webkit-scrollbar-thumb {
   border: 2px solid white;
   border-radius: 10px;
   background-color: none;
-  transition: 0.2s 0.1s all ease-in;
+  transition: 0.1s 0s all ease-in;
 }
 .break {
   border: 2px solid #67ff67;
   color: #67ff67;
+}
+.session-arrange-btn {
+  cursor: pointer;
+  opacity: 0.1;
+  color: white;
+  display: block;
+  float: left;
+  margin: 3px 0 auto 0px;
+  position: relative;
+  font-size: 0.8rem;
+}
+.session-delete-btn {
+  cursor: pointer;
+  opacity: 0.1;
+  color: white;
+  display: block;
+  float: right;
+  margin: 11px 0px auto auto;
+  position: relative;
+  font-size: 0.8rem;
 }
 .session-button small span {
   margin-left: 4px;
@@ -129,12 +158,22 @@ div.session-button-all::-webkit-scrollbar-thumb {
 .session-button .session-name {
   font-family: 'Montserrat',sans-serif;
   font-weight: bold;
+  font-size: 0.9rem;
   text-align: center;
   display: block;
   width: 85%;
   border: none;
   border-radius: 6px;
-  margin: 2px auto 2px auto;
+  margin: 3px auto 2px auto;
+}
+.session-button .session-time {
+  font-size: 0.8rem;
+  margin: 2px auto 3px auto;
+}
+.session-button .session-time span {
+  cursor: pointer;
+  font-size: 0.7rem;
+  margin-left: 4px;
 }
 .session-button .session-num {
   /* -webkit-appearance: none; */
@@ -255,6 +294,7 @@ div.session-history-item::-webkit-scrollbar-thumb {
 }
 /*delete button*/
 .delete-all-btn span {
+  cursor: pointer;
   position: relative;
   z-index: 82;
   font-size: 1.2rem;

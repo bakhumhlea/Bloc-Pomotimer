@@ -1,61 +1,84 @@
 .time-form-template {
   margin: 20px auto auto auto;
 }
+.time-form-template div i {
+  color: white;
+  text-shadow: white 0px 0px 1px, white 0px 0px 30px;
+}
 .form-input-text {
   display: block;
-  width: 186px;
-  color: black;
+  width: 192px;
+  color: white;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
   text-align: center;
   padding: 4px;
-  border: 2px solid #222222;
-  border-radius: 8px;
-  margin: 4px auto 4px auto;
+  border: 2px solid white;
+  border-radius: 23px;
+  margin: 4px auto 8px auto;
+  background-color: #090b13;
+  text-shadow: #148daf 0px 0px 0px, #148daf 0px 0px 20px;
+  box-shadow: #148daf 0px 0px 2px 0px, #148daf 0px 0px 10px 0px, #148daf 0px 0px 15px 0px inset;
   outline: none;
 }
 .form-input-text:focus {
-  border: 2px solid #68a1da;
-  box-shadow: 0px 0px 3px 1px #68a1da;
+  border: 2px solid white;
+  transition: 0.1s 0s all ease-in;
+  text-shadow: #148daf 0px 0px 15px, #148daf 0px 0px 35px;
+  box-shadow: #148daf 0px 0px 10px 0px, #148daf 0px 0px 25px 0px, #148daf 0px 0px 20px 0px inset;
 }
 .form-input-num {
   display: inline-block;
-  width: 45px;
-  color: black;
+  width: 46px;
+  color: white;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
   text-align: center;
-  padding: 4px 0px 4px 12px;
-  border: 2px solid #222222;
-  border-radius: 8px;
-  margin: 4px;
+  padding: 4px 7px 4px 7px;
+  border: 2px solid white;
+  border-radius: 23px;
+  margin: 4px 3px auto 3px;
+  background-color: #090b13;
+  text-shadow: #148daf 0px 0px 0px, #148daf 0px 0px 20px;
+  box-shadow: #148daf 0px 0px 2px 0px, #148daf 0px 0px 10px 0px, #148daf 0px 0px 15px 0px inset;
   outline: none;
 }
+  input[type=number].form-input-num::-webkit-inner-spin-button,
+  input[type=number].form-input-num::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .form-input-num:focus {
-  border: 2px solid #68a1da;
-  box-shadow: 0px 0px 3px 1px #68a1da;
+  border: 2px solid white;
+  transition: 0.1s 0s all ease-in;
+  text-shadow: #148daf 0px 0px 15px, #148daf 0px 0px 35px;
+  box-shadow: #148daf 0px 0px 10px 0px, #148daf 0px 0px 25px 0px, #148daf 0px 0px 20px 0px inset;
 }
 .form-btn {
   display: block;
   cursor: pointer;
   height: 40px;
-  width: 200px;
+  width: 206px;
   color: white;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.0rem;
   font-weight: 600;
   text-align: center;
   padding: 4px;
-  border: none;
-  border-radius: 10px;
-  margin: 4px auto auto auto;
-  background-color: #148daf;
+  border: 2px solid white;
+  border-radius: 20px;
+  margin: 10px auto auto auto;
+  background-color: #090b13;
+  text-shadow: #148daf 0px 0px 0px, #148daf 0px 0px 20px;
+  box-shadow: #148daf 0px 0px 2px 0px, #148daf 0px 0px 10px 0px, #148daf 0px 0px 15px 0px inset;
+  outline: none;
 }
 .form-btn:hover {
   transition: 0.1s 0s all ease-in;
-  background-color: #08a6d2;
+  text-shadow: #148daf 0px 0px 15px, #148daf 0px 0px 35px;
+  box-shadow: #148daf 0px 0px 10px 0px, #148daf 0px 0px 25px 0px, #148daf 0px 0px 20px 0px inset;
 }
 .form-error {
   width: 300px;
